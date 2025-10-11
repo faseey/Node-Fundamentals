@@ -3,3 +3,6 @@
 1760193293755: POST: /api/users
 1760193299156: POST: /api/users
 1760193303150: POST: /api/users
+1760194795821: POST: /api/users
+1760194827801: GET: /api/users
+1760195340702: GET: /api/users

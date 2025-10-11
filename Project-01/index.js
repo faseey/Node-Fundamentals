@@ -5,8 +5,22 @@ const fs = require("fs")
 const app = express()
 const port = 8000
 app.use(express.urlencoded({extended : false}));
+//MIDDLEWARE
+app.use((req,res,next) =>{
+    console.log("hello from middleware 1");
+    fs.appendFile("./Project-01/log.txt",`\n${Date.now()}: ${req.method}: ${req.path}`,(err,data)=>{
+        next();
+    })
+})
 
+
+//setting on headers in response
 app.get("/api/users" , (req,res) => {
+    res.setHeader("myName","Fasih")
+    //printing headers that are coming as a req
+    // got practice to use custom headers like this : X-headername
+    //builtin header can be found in mdn docs
+    console.log(req.headers)
     res.json(users)
 })
 
@@ -35,7 +49,7 @@ app.post("/api/users" , (req,res) => {
     const body = req.body
     users.push({...body,id: users.length+1})
     fs.writeFile("./Project-01/MOCK_DATA.json" , JSON.stringify(users) ,(err,data)=> {
-        return res.json({status : 'success' ,id: users.length})
+        return res.status(201).json({status : 'success' ,id: users.length})
     })
     //return res.json({status : 'pending'})
 })
