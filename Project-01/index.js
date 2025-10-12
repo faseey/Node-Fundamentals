@@ -78,14 +78,34 @@ app.route("/user/:id")
         return req.json({status : 'pending'})
     })
 
-app.post("/api/users" , (req,res) => {
+
+    //FOR FS
+// app.post("/api/users" , (req,res) => {
+//     const body = req.body
+//     users.push({...body,id: users.length+1})
+//     fs.writeFile("./Project-01/MOCK_DATA.json" , JSON.stringify(users) ,(err,data)=> {
+//         return res.status(201).json({status : 'success' ,id: users.length})
+//     })
+//     //return res.json({status : 'pending'})
+// })
+
+app.post("/api/users" ,async(req,res) => {
     const body = req.body
-    users.push({...body,id: users.length+1})
-    fs.writeFile("./Project-01/MOCK_DATA.json" , JSON.stringify(users) ,(err,data)=> {
-        return res.status(201).json({status : 'success' ,id: users.length})
-    })
+    if(!body.first_name || !body.last_name || !body.email || !body.gender ||!body.jobTittle){
+        return req.status(400).json({ msg : "All fields are required"});
+    }
     //return res.json({status : 'pending'})
+    const result = await Users.create({
+        first_name: body.first_name,
+        last_name : body.last_name,
+        gender: body.gender,
+        email: body.email,
+        jobTittle: body.jobTittle
+    })
+    return res.status(201).json({msg : successful})
 })
+
+
 
 app.listen(port , ()=>{
     console.log("Server is started")
