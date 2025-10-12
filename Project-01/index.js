@@ -1,9 +1,42 @@
 const express = require("express")
 const users = require("./MOCK_DATA.json")
+const mongoose = require("mongoose")
 const fs = require("fs")
+const { type } = require("os")
+
+
+mongoose.connect("mongodb://127.0.0.1:27017/youtube-app-1")
+.then(()=>{console.log("Mongo connected")})
+.catch((err)=>{ console.log("Db not connected" , err)
+})
+
+const userSchema  = new mongoose.Schema({
+    first_name : {
+        type : String,
+        required: true
+    },
+    last_name: {
+        type: String,
+    },
+    email: {
+        type:  String,
+        required: true,
+        unique : true,
+    },
+    jobTittle:{
+        type: String,
+    },
+    gender:{
+        type : String,
+    },
+})
+
+const Users = mongoose.model('user',userSchema)
 
 const app = express()
 const port = 8000
+
+//Middleware plugin
 app.use(express.urlencoded({extended : false}));
 //MIDDLEWARE
 app.use((req,res,next) =>{
@@ -19,7 +52,7 @@ app.get("/api/users" , (req,res) => {
     res.setHeader("myName","Fasih")
     //printing headers that are coming as a req
     // got practice to use custom headers like this : X-headername
-    //builtin header can be found in mdn docs
+    //builtin header can be founnd in mdn docs
     console.log(req.headers)
     res.json(users)
 })
