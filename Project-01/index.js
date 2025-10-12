@@ -1,37 +1,6 @@
 const express = require("express")
 const users = require("./MOCK_DATA.json")
-const mongoose = require("mongoose")
 const fs = require("fs")
-const { type } = require("os")
-
-
-mongoose.connect("mongodb://127.0.0.1:27017/youtube-app-1")
-.then(()=>{console.log("Mongo connected")})
-.catch((err)=>{ console.log("Db not connected" , err)
-})
-
-const userSchema  = new mongoose.Schema({
-    first_name : {
-        type : String,
-        required: true
-    },
-    last_name: {
-        type: String,
-    },
-    email: {
-        type:  String,
-        required: true,
-        unique : true,
-    },
-    jobTittle:{
-        type: String,
-    },
-    gender:{
-        type : String,
-    },
-})
-
-const Users = mongoose.model('user',userSchema)
 
 const app = express()
 const port = 8000
@@ -80,31 +49,14 @@ app.route("/user/:id")
 
 
     //FOR FS
-// app.post("/api/users" , (req,res) => {
-//     const body = req.body
-//     users.push({...body,id: users.length+1})
-//     fs.writeFile("./Project-01/MOCK_DATA.json" , JSON.stringify(users) ,(err,data)=> {
-//         return res.status(201).json({status : 'success' ,id: users.length})
-//     })
-//     //return res.json({status : 'pending'})
-// })
-
-app.post("/api/users" ,async(req,res) => {
+app.post("/api/users" , (req,res) => {
     const body = req.body
-    if(!body.first_name || !body.last_name || !body.email || !body.gender ||!body.jobTittle){
-        return req.status(400).json({ msg : "All fields are required"});
-    }
-    //return res.json({status : 'pending'})
-    const result = await Users.create({
-        first_name: body.first_name,
-        last_name : body.last_name,
-        gender: body.gender,
-        email: body.email,
-        jobTittle: body.jobTittle
+    users.push({...body,id: users.length+1})
+    fs.writeFile("./Project-01/MOCK_DATA.json" , JSON.stringify(users) ,(err,data)=> {
+        return res.status(201).json({status : 'success' ,id: users.length})
     })
-    return res.status(201).json({msg : successful})
+    //return res.json({status : 'pending'})
 })
-
 
 
 app.listen(port , ()=>{
