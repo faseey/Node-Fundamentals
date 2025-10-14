@@ -44,6 +44,18 @@ const port = 8000
 app.use(express.urlencoded({extended : false}));
 
 
+//GET ALL Users
+app.get("/users" ,async(req,res)=>{
+    const allDbusers = await Users.find({});
+    const html =`
+    <ul>
+    ${allDbusers.map((user)=> `<li> ${user.first_name} - ${user.email}</li>`).join("")}
+    <ul>
+    `
+    return res.send(html);
+
+})
+
 //POST ROUTE
 app.post("/api/users" ,async(req,res) => {
     console.log("in post req")
@@ -63,6 +75,12 @@ app.post("/api/users" ,async(req,res) => {
     console.log(body)
     return res.status(201).json({msg : "successful"})
 })
+
+app.get("/api/users",async(req,res)=>{
+    const allDbUsers = await Users.find({});
+    res.send(allDbUsers);
+})
+
 
 
 
