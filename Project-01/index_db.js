@@ -81,6 +81,22 @@ app.get("/api/users",async(req,res)=>{
     res.send(allDbUsers);
 })
 
+app.route("/api/users/:id")
+.get(async(req,res)=>{
+    const user = await Users.findById(req.params.id);
+    if(!user) return res.status(404).json({error:"user not found"})
+    else{
+    return res.send(user);
+    }
+})
+.patch(async(req,res)=>{
+    await Users.findByIdAndUpdate(req.params.id,{last_name: "changed"});
+    return res.json({msg : "updated!"})
+})
+.delete(async(req,res)=>{
+    await Users.findByIdAndDelete(req.params.id);
+    return res.json({msg: "deleted"})
+})
 
 
 
