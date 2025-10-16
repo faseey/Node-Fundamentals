@@ -26,7 +26,7 @@ const userSchema  = new mongoose.Schema({
         required: true,
         unique : true,
     },
-    jobTittle:{
+    jobTitle:{
         type: String,
     },
     gender:{
@@ -70,7 +70,7 @@ app.post("/api/users" ,async(req,res) => {
         last_name : body.last_name,
         gender: body.gender,
         email: body.email,
-        jobTittle: body.jobTittle
+        jobTitle: body.jobTitle
     })
     console.log(body)
     return res.status(201).json({msg : "successful"})
