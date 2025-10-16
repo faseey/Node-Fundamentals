@@ -1,13 +1,10 @@
 const express = require("express");
-
+const {handleGetAllUsers,getUserById} = require("../controllers/user")
 const route = express.Router; // will work as user
 
 
 
-route.get("/",async(req,res)=>{
-    const allDbUsers = await Users.find({});
-    res.send(allDbUsers);
-})
+route.get("/",handleGetAllUsers(req,res))
 
 
 //POST ROUTE
@@ -32,17 +29,8 @@ route.post("/" ,async(req,res) => {
 
 
 route.route("/:id")
-.get(async(req,res)=>{
-    const user = await Users.findById(req.params.id);
-    if(!user) return res.status(404).json({error:"user not found"})
-    else{
-    return res.send(user);
-    }
-})
-.patch(async(req,res)=>{
-    await Users.findByIdAndUpdate(req.params.id,{last_name: "changed"});
-    return res.json({msg : "updated!"})
-})
+.get(getUserById(req,res))
+.patch()
 .delete(async(req,res)=>{
     await Users.findByIdAndDelete(req.params.id);
     return res.json({msg: "deleted"})
