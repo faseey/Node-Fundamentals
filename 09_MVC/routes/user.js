@@ -4,17 +4,9 @@ const router = express.Router(); // will work as user
 
 
 
-router.get("/",handleGetAllUsers)
-
-router.route("/:id")
-.get(handleGetUserById)
-.patch(handleupdateUserByID)
-.delete(handleDeleteById)
-
-
-//POST ROUTE
-router.post("/",handleCreateUser);
-
+router.route("/")
+.get(handleGetAllUsers)
+.post(handleCreateUser);
 
 router.route("/:id")
 .get(handleGetUserById)
