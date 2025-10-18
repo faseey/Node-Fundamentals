@@ -1,3 +1,4 @@
+const { timeStamp } = require("console");
 const URL = require("../models/url.js")
 const {nanoid}  = require("nanoid");
 
@@ -23,8 +24,25 @@ async function handleAnalytics(req,res) {
     return res.json({Total_count : result.visitHistory.length});
     
 }
+async function handleRedirectURL(req,res) {
+    const shortId = req.params.shortId;
+    const Entry = await URL.findOneAndUpdate({
+        short_Id: shortId,
+    
+    },
+        {
+            $push : {
+            visitHistory : {
+                timeStamp : Date.now(),}
+        }})
+
+        return res.redirect(Entry.redirectURL)
+
+    
+}
 
 module.exports ={
      handleGenerateNewURL,
      handleAnalytics,
+     handleRedirectURL,
     }
