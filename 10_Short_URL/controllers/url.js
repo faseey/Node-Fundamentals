@@ -1,7 +1,6 @@
-const express = require("express");
 const URL = require("../models/url.js")
 const {nanoid}  = require("nanoid");
-const { json } = require("stream/consumers");
+
 
 async function handleGenerateNewURL(req,res) {
     const body = req.body;
@@ -16,6 +15,7 @@ async function handleGenerateNewURL(req,res) {
     return res.status(201).json({id : shortID})
     
 }
+
 module.exports ={
      handleGenerateNewURL,
     }
