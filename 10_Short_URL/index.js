@@ -16,19 +16,6 @@ app.use(express.json());
 
 
 app.use("/url", URL_route)
-//app.use("/:shortId",URL_route);
-// app.get("/:shortId",async(req,res)=>{
-//     const short_Id = req.params.shortId
-//     const Entry = await URL.findOneAndUpdate({
-//         short_Id : short_Id
-//     },{
-//     $push: {
-//         visitHistory : {timeStamp : Date.now()}
-//     }})
-
-//     res.redirect(Entry.redirectURL);
-// })
-
 
 
 app.listen(port,()=> {console.log(`Server Started at port: ${port}`)})
