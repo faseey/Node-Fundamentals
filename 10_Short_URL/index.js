@@ -1,8 +1,11 @@
 const express = require("express")
 const path = require("path")
 const {connectMongoDb} = require("./connections")
+
+
 const URL_route = require("./routes/url")
 const staticRoute = require("./routes/staticRouter")
+const userRoute = require("./routes/user")
 
 
 connectMongoDb("mongodb://127.0.0.1:27017/URL_Shortner").then(
@@ -31,6 +34,7 @@ app.use(express.urlencoded({extended : false}));
 // });
 app.use("/url", URL_route)
 app.use("/", staticRoute)
+app.use("/user" , userRoute)
 
 
 app.listen(port,()=> {console.log(`Server Started at port: ${port}`)})
