@@ -15,7 +15,7 @@ async function handleGenerateNewURL(req,res) {
     return res.render("home", {
         id : shortID,
     })
-    return res.status(201).json({id : shortID})
+    // return res.status(201).json({id : shortID})
     
 }
 async function handleAnalytics(req,res) {

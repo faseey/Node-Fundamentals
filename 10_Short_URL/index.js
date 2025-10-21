@@ -13,7 +13,7 @@ connectMongoDb("mongodb://127.0.0.1:27017/URL_Shortner").then(
 const app = express()
 const port = 8001;
 app.set("view engine" , "ejs");
-app.set("views",path.resolve("./views"));
+app.set("views",path.resolve(__dirname,"./views"));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 // app.get("/test",async(req,res)=>{
