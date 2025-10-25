@@ -16,6 +16,7 @@ async function restrictedToLoginUser(req,res,next) {
 
 async function checkAuth(req , res,next) {
     const userUid = req.cookies?.uid;
+    console.log(userUid, "Cookie UID");
     
     const user = getUser(userUid);
     console.log(user);
