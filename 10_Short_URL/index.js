@@ -35,7 +35,7 @@ app.use(cookieParser())
 //         </html>`)
     
 // });
-app.use("/url" ,URL_route)
+app.use("/url" ,restrictedToLoginUser,URL_route)
 app.use("/", staticRoute)
 app.use("/user" , userRoute)
 
