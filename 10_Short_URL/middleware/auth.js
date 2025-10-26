@@ -64,4 +64,6 @@ function CheckForAuthentication(req,res,next){
 module.exports = {
     restrictedToLoginUser,
     checkAuth,
+    restrictTo,
+    CheckForAuthentication,
 }
