@@ -33,14 +33,14 @@ async function checkAuth(req , res,next) {
 
 //THESE two funtion can handle both authorization and authentication as well (Piyush)
 function CheckForAuthentication(req,res,next){
-    const authorizationvalueHeader = req.eader["authorization"];
+    const authorizationvalueHeader = req.headers["authorization"];
     req.user = null;
 
-    if(!authorizationvalueHeader || !authorizationvalueHeader.startswith("Bearer")){
+    if(!authorizationvalueHeader || !authorizationvalueHeader.startsWith("Bearer")){
         return next();
     }
 
-    const token = authorizationvalueHeader.split("Bearer ",1);
+    const token = authorizationvalueHeader.split(("Bearer "),[1]);
     const user = getUser(token);
     req.user = user;
     return next();
@@ -48,12 +48,12 @@ function CheckForAuthentication(req,res,next){
 }
 
 //ADMIN, NORMAL,MANAGER
- function restrictTo(roles){
+ function restrictTo(roles = []){
     return function(req,res,next){
         if(!req.user){
              return res.redirect("login");
         }
-        if(roles.include(req.user.role)){
+        if(!roles.include(req.user.role)){
             return res.end("UnAuthorized Person")
         }
 
