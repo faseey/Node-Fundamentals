@@ -46,6 +46,7 @@ const {getUser} = require("../service/auth")
 //     return next();
 
 // }
+//AUTHORIZATION
 function CheckForAuthentication(req, res, next) {
     console.log("in iddleware");
   req.user = null;
@@ -74,6 +75,8 @@ function CheckForAuthentication(req, res, next) {
   next();
 }
 
+
+//AUTHENTICATION
 //ADMIN, NORMAL,MANAGER
  function restrictTo(roles = []){
     return function(req,res,next){

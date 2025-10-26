@@ -1,3 +1,5 @@
+//BUISNESS LOGIC
+
 const { timeStamp } = require("console");
 const URL = require("../models/url.js")
 const {nanoid}  = require("nanoid");

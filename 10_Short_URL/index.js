@@ -36,7 +36,7 @@ app.use(CheckForAuthentication)
 //         </html>`)
     
 // });
-app.use("/url" ,restrictTo(["NORMAL"]),URL_route)
+app.use("/url" ,restrictTo(["NORMAL","ADMIN"]),URL_route)
 app.use("/", staticRoute)
 app.use("/user" , userRoute)
 
