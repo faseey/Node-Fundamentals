@@ -1,5 +1,7 @@
 
 const {getUser} = require("../service/auth")
+
+//Fro authentication JWT
 async function restrictedToLoginUser(req,res,next) {
     const userUid = req.cookies?.uid;
     if(!userUid){
@@ -24,6 +26,40 @@ async function checkAuth(req , res,next) {
     next();
     
 }
+//these two funtions have repition 
+
+// for authorization
+//simple clean code
+function CheckForAuthentication(req,res,next){
+    const authorizationvalueHeader = req.eader["authorization"];
+    req.user = null;
+
+    if(!authorizationvalueHeader || !authorizationvalueHeader.startswith("Bearer")){
+        return next();
+    }
+
+    const token = authorizationvalueHeader.split("Bearer ",1);
+    const user = getUser(token);
+    req.user = user;
+    return next();
+
+}
+
+//ADMIN, NORMAL,MANAGER
+ function restrictTo(roles){
+    return function(req,res,next){
+        if(!req.user){
+             return res.redirect("login");
+        }
+        if(roles.include(req.user.role)){
+            return res.end("UnAuthorized Person")
+        }
+
+        return next();
+    }
+
+ }
+
 
 module.exports = {
     restrictedToLoginUser,
