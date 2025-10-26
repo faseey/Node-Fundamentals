@@ -30,6 +30,8 @@ async function checkAuth(req , res,next) {
 
 // for authorization
 //simple clean code
+
+//THESE two funtion can handle both authorization and authentication as well (Piyush)
 function CheckForAuthentication(req,res,next){
     const authorizationvalueHeader = req.eader["authorization"];
     req.user = null;
