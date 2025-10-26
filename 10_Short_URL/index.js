@@ -22,6 +22,7 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser())
+app.use(CheckForAuthentication)
 // app.get("/test",async(req,res)=>{
 //     const allURl = await URL.find({});
 //     return res.end(`
@@ -36,7 +37,7 @@ app.use(cookieParser())
     
 // });
 app.use("/url" ,restrictTo(["NORMAL"]),URL_route)
-app.use("/",checkAuth, staticRoute)
+app.use("/", staticRoute)
 app.use("/user" , userRoute)
 
 
