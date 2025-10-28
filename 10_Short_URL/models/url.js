@@ -15,6 +15,11 @@ const URL_schema = new mongoose.Schema({
     createdBy: {
         type : mongoose.Schema.Types.ObjectId,
         ref : "users"
+    },
+    Visiblity :{
+        type : Boolean,
+        required : true,
+        default : true,
     }
     },{timestamps: true}
 )

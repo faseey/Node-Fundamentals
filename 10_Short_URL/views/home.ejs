@@ -1,52 +1,84 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body{
-        font-family: 'Times New Roman', Times, serif;
-      }
-    </style>
-    <title>Home Page</title>
-  </head>
-  <body>
-   
-   <h1>URL - Shortner</h1>
-  <% if (id) { %>
-   <p> URL Generated : http://localhost:8001/url/<%= id  %></p>
-  <% } %>
-   <div>
-    <form method="POST" action = "/url">
-      <label>Enter your original URL</label>
-      <input type="text" 
-      name = "url"
-      placeholder="https://example.com">
-      <button type="submit">Generate URL</button>
-    </form>
-   </div>
-   <div>
-    <% if (urls) { %>
-      <table>
-        <thead>
-          <Th>Sr .No</Th>
-          <th>Short id</th>
-          <th>Redirect URL</th>
-          <th>No of click!</th>
-        </thead>
-        <tbody>
-          <% urls.forEach((url,index) => { %>
-            <tr>
-            <td><%= index+1  %></td>
-            <td><%= url.short_Id %></td>
-            <td><%= url.redirectURL  %></td>
-            <td><%= url.visitHistory.length  %></td>
-            </tr>
-           
-          <% }) %>
-        </tbody>
-      </table>
 
-     
+<head>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+    }
+  </style>
+  <title>Home Page</title>
+</head>
+
+<body>
+
+  <h1>URL - Shortner</h1>
+  <% if (id) { %>
+    <p> URL Generated : http://localhost:8001/url/<%= id %>
+    </p>
     <% } %>
-   </div>
-  </body>
+      <div>
+        <form method="POST" action="/url">
+          <label>Enter your original URL</label>
+          <input type="text" name="url" placeholder="https://example.com">
+          <button type="submit">Generate URL</button>
+        </form>
+      </div>
+      <div>
+        <% if (urls) { %>
+          <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+              <tr>
+                <th>Sr. No</th>
+                <th>Short ID</th>
+                <th>Redirect URL</th>
+                <th>No. of Clicks</th>
+                <th>Open to Public?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% urls.forEach((url, index)=> { %>
+                <tr>
+                  <td>
+                    <%= index + 1 %>
+                  </td>
+                  <td>
+                    <a href="http://localhost:8001/url/<%= url.short_Id %>" target="_blank">
+                      <%= url.short_Id %>
+                    </a>
+                  </td>
+
+                  <td>
+                    <%= url.redirectURL %>
+                  </td>
+                  <td>
+                    <%= url.visitHistory.length %>
+                  </td>
+                  <td>
+                    <form method="POST" action="/url/visiblity">
+                      <input type="hidden" name="shortId" value="<%= url.short_Id %>">
+
+                      <label>
+                        <input type="radio" name="visiblity" value="true" <%=url.Visiblity? 'checked' : '' %>
+                        onchange="this.form.submit()"
+                        > Yes
+                      </label>
+
+                      <label>
+                        <input type="radio" name="visiblity" value="false" <%=!url.Visiblity ? 'checked' : '' %>
+                        onchange="this.form.submit()"
+                        > No
+                      </label>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+          <% } %>
+
+
+      </div>
+</body>
+
 </html>
