@@ -1,0 +1,23 @@
+const jwt = require("jsonwebtoken")
+const secret = "fasih1234"
+
+function setUser(user){
+    return jwt.sign(
+        {
+            id : user._id,
+            email : user.email,
+
+        },secret
+    )
+
+}
+function getUser(token){
+    try{
+       return  jwt.verify(token,secret);
+    }
+    catch{
+        return null;
+    }
+}
+
+module.exports = {setUser,getUser};
